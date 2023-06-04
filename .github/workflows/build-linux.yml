@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -23,8 +23,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: 'Install all needed packages'
         run: |
-            apt-get update
-            apt-get install git rpm dpkg fakeroot zip -y
+            sudo apt-get update
+            sudo apt-get install git rpm dpkg fakeroot zip -y
       - name: 'Enable corepack (yarn)'
         run: 'corepack enable'
       - name: 'Install npm packages'

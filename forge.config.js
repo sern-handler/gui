@@ -5,10 +5,6 @@ module.exports = {
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-squirrel',
-      config: {},
-    },
-    {
       name: '@electron-forge/maker-zip',
     },
     {
@@ -18,6 +14,10 @@ module.exports = {
           icon: './icons/icon.png'
         }
       },
+    },
+    {
+      name: '@electron-forge/maker-rpm',
+      config: {}
     }
   ],
 };

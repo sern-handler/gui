@@ -1,0 +1,41 @@
+name: Build Linux packages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: 'Install all needed packages'
+        run: |
+            apt-get update
+            apt-get install git rpm dpkg fakeroot zip -y
+      - name: 'Enable corepack (yarn)'
+        run: 'corepack enable'
+      - name: 'Install npm packages'
+        run: 'yarn install'
+      - name: 'Make packages'
+        run: yarn make
+      - name: 'Upload artifacts'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Build output
+          path: |
+            ./out/make/deb/x64/*
+            ./out/make/rpm/x64/*
+            ./out/make/zip/linux/x64/*

@@ -1,0 +1,22 @@
+@font-face {
+	font-family: 'Classic Console Neue';
+	src: local('Classic Console Neue'),
+		url('https://fonts.srizan.dev/clacon2.ttf') format('truetype');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+.titleHeader {
+	color: #4af626;
+	font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+	text-align: center;
+}
+
+.functionalityCards {
+	display: flex;
+	gap: 30px;
+	padding: 20px;
+	align-items: center;
+	display: 'grid';
+	grid-template-columns: 'repeat(2, 1fr)';
+}

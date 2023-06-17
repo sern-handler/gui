@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+#modal-modal-title {
+    text-align: center;
+    color: #4af626;
+	font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 40px;
+}
+
+.boxStyle {
+    /* background-color: 'background.paper'; set in sx property of Box tag */
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 74.6vw;
+    height: 74.6vh;
+    border: 2px solid #FFF;
+    box-shadow: 24px;
+    padding: 40px;
+    color: white;
+}
+
+.chooseTemplateForm {
+    display: flex;
+    flex-direction: column;
+}
+  
+.formRow {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}

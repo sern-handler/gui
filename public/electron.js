@@ -1,5 +1,5 @@
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 
 function createWindow() {
@@ -8,6 +8,7 @@ function createWindow() {
 		height: 600,
 		webPreferences: {
 			nodeIntegration: true,
+			contextIsolation: false
 		},
 		icon: './icons/icon.png',
 		show: false,
@@ -27,6 +28,20 @@ function createWindow() {
 	mainWindow.on('page-title-updated', function (e) {
 		e.preventDefault();
 	});
+
+	ipcMain.on('openFolder', (event, arg) => {
+		dialog
+		  .showOpenDialog({
+			properties: ['openDirectory'],
+		  })
+		  .then((result) => {
+			event.reply('folderData', result.filePaths);
+		  })
+		  .catch((error) => {
+			console.error(error);
+			event.reply('folderData', []);
+		  });
+	  });
 }
 
 app.whenReady().then(createWindow);

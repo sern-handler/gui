@@ -1,7 +1,7 @@
 {
   "name": "sern-gui",
   "productName": "sern-gui",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha",
   "main": "./public/electron.js",
   "private": true,
   "homepage": "./",

@@ -11,9 +11,9 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import CardActions from '@mui/material/CardActions';
+import Alert from '@mui/material/Alert';
 import './modalStyles.css';
-const { ipcRenderer } = window.require('electron')
+const { ipcRenderer } = window.require('electron');
 
 // eslint-disable-next-line no-unused-vars
 const style = {
@@ -71,6 +71,11 @@ export default function InitModal() {
     ipcRenderer.send('openFolder');
   };
 
+  const [projectName, setProjectName] = React.useState('');
+  const handleProjectNameChange = (event) => {
+    setProjectName(event.target.value);
+  };
+
   React.useEffect(() => {
     ipcRenderer.on('folderData', handleFolderData);
 
@@ -84,99 +89,155 @@ export default function InitModal() {
     setSelectedPath(selectedPath);
   };
 
+  const [loading, setLoading] = React.useState(false);
+
+  const isFormValid = () => {
+    return projectName !== '' && selectedPath !== '';
+  };
+
+  const handleSubmit = () => {
+    if (!isFormValid()) {
+      return;
+    }
+
+    const data = {
+      projectName,
+      chosenTemplate,
+      installPackages,
+      chosenPackageManager,
+      selectedPath,
+    };
+
+    setLoading(true);
+
+    ipcRenderer.send('submitForm', data);
+
+    ipcRenderer.on('submitForm', () => {
+      setLoading(false);
+      handleClose();
+      ipcRenderer.removeAllListeners('submitForm'); // Remove the listener to avoid memory leaks
+    });
+  }
+
   return (
-		<div>
-			<Button onClick={handleOpen}>Open modal</Button>
-			<Modal
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			>
-				<Box className="boxStyle" sx={{ bgcolor: 'background.paper' }}>
-					<Typography
-						id="modal-modal-title"
-						variant="h1"
-						component="h1"
-					>
-						~$ sern init
-					</Typography>
-					<div className="formRow">
-						<TextField
-							id="modal-form-projectName"
-							label="Project name"
-							variant="outlined"
-							fullWidth
-						/>
-						<FormControl fullWidth className="chooseTemplateForm">
-							<InputLabel id="modal-form-templateLabel">
-								Select template
-							</InputLabel>
-							<Select
-								labelId="modal-form-templateSelect"
-								id="modal-form-templateSelect"
-								value={chosenTemplate}
-								label="Select template"
-								onChange={handleTemplateChange}
-								fullWidth
-							>
-								{templates.map((template) => (
-									<MenuItem
-										key={template.value}
-										value={template.value}
-									>
-										{template.title}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</div>
-					<div className="formRow">
-						<FormGroup>
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={installPackages}
-										onChange={handlePackagesChange}
-									/>
-								}
-								fullWidth
-								label="Install packages while you're at it"
-							/>
-						</FormGroup>
-						<FormControl className="choosePkgManagerForm" fullWidth>
-							<InputLabel id="modal-form-packageManagerLabel">
-								Select package manager
-							</InputLabel>
-							<Select
-								labelId="modal-form-packageManagerLabel"
-								id="modal-form-packageManagerSelect"
-								value={chosenPackageManager}
-								label="Select package manager"
-								onChange={handlePackageManagerChange}
-								disabled={!installPackages}
-							>
-								<MenuItem value="npm">npm</MenuItem>
-								<MenuItem value="yarn">yarn</MenuItem>
-								<MenuItem value="pnpm">pnpm</MenuItem>
-							</Select>
-						</FormControl>
-					</div>
-					<div className="formRow">
-          <Button
-            variant="contained"
-            component="label"
-            onClick={handleChooseDirButton}
-            sx={{ display: 'block', margin: '0 auto', marginTop: '20px' }}
-          >
-            Select directory
-          </Button>
-					{/* <Typography variant="body1" component="div">
-            Selected directory: {selectedPath}
-          </Typography> */}
-					</div>
-				</Box>
-			</Modal>
-		</div>
+    <div>
+      <Button onClick={handleOpen}>Open modal</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className="boxStyle" sx={{ bgcolor: 'background.paper' }}>
+          <Typography id="modal-modal-title" variant="h1" component="h1">
+            ~$ sern init
+          </Typography>
+          <div className="formRow">
+            <TextField
+              id="modal-form-projectName"
+              label="Project name"
+              variant="outlined"
+              onChange={handleProjectNameChange}
+              required
+              fullWidth
+            />
+            <FormControl fullWidth className="chooseTemplateForm">
+              <InputLabel id="modal-form-templateLabel">
+                Select template
+              </InputLabel>
+              <Select
+                labelId="modal-form-templateSelect"
+                id="modal-form-templateSelect"
+                value={chosenTemplate}
+                label="Select template"
+                onChange={handleTemplateChange}
+                fullWidth
+              >
+                {templates.map((template) => (
+                  <MenuItem key={template.value} value={template.value}>
+                    {template.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="formRow">
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={installPackages}
+                    onChange={handlePackagesChange}
+                  />
+                }
+                fullWidth
+                label="Install packages while you're at it"
+              />
+            </FormGroup>
+            <FormControl className="choosePkgManagerForm" fullWidth>
+              <InputLabel id="modal-form-packageManagerLabel">
+                Select package manager
+              </InputLabel>
+              <Select
+                labelId="modal-form-packageManagerLabel"
+                id="modal-form-packageManagerSelect"
+                value={chosenPackageManager}
+                label="Select package manager"
+                onChange={handlePackageManagerChange}
+                disabled={!installPackages}
+                required={installPackages}
+              >
+                <MenuItem value="npm">npm</MenuItem>
+                <MenuItem value="yarn">yarn</MenuItem>
+                <MenuItem value="pnpm">pnpm</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <div className="formRow">
+            <Button
+              variant="outlined"
+              component="label"
+              onClick={handleChooseDirButton}
+              sx={{ display: 'block', margin: '0 auto', marginTop: '5px' }}
+            >
+              Select directory
+            </Button>
+          </div>
+          <div className="formRow">
+            <Typography
+              variant="body1"
+              component="div"
+              sx={{ display: 'block', margin: '0 auto', marginTop: '5px' }}
+            >
+              {selectedPath ? `Selected directory: ${selectedPath}` : ''}
+            </Typography>
+          </div>
+          <div className="formRow">
+            <Typography
+              variant="body1"
+              component="div"
+              sx={{
+                display: 'block',
+                margin: '0 auto',
+                marginTop: '5px',
+                textAlign: 'center',
+              }}
+            >
+              Do not close the modal while it's loading.
+            </Typography>
+          </div>
+          <div className="bottomRight">
+            <Button
+              variant="contained"
+              component="label"
+              onClick={handleSubmit}
+              disabled={loading || !isFormValid()}
+            >
+              {loading ? 'Go!' : 'Go!'}
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+    </div>
   );
 }

@@ -73,7 +73,7 @@ function createWindow() {
 				commandToRun = `cd ${data.selectedPath};${packageManagerCommand}`
 				break;
 			case 'windows':
-				commandToRun = `cd /D ${data.selectedPath};${packageManagerCommand}`
+				commandToRun = `cd /D ${data.selectedPath} && ${packageManagerCommand}`
 				break;
 			case 'macOS':
 				commandToRun = `cd ${data.selectedPath};${packageManagerCommand}`

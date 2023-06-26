@@ -31,6 +31,12 @@
     "dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
     "electron": "electron ."
   },
+  "build": {
+    "win": {
+      "icon": "icons/icon.ico",
+      "publisherName": "sern open source"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

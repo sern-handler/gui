@@ -3,7 +3,7 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 const fs = require('fs');
 const colorette = require('colorette')
-const { spawn } = require('node:child_process')
+const { exec } = require('node:child_process')
 
 function createWindow() {
 	const mainWindow = new BrowserWindow({
@@ -85,7 +85,7 @@ function createWindow() {
 		}
 
 		console.log(`${colorette.cyan('🛈')} About to execute command: ${commandToRun}`)
-		const cmd = spawn(commandToRun, { shell: true })
+		const cmd = exec(commandToRun)
 
 		cmd.stdout.on('data', (data) => {
 			console.log(`${colorette.cyan('🛈')} Command stdout: ${data}`);

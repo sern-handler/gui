@@ -13,15 +13,12 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.11.16",
-    "@mui/lab": "^5.0.0-alpha.134",
     "@mui/material": "^5.13.4",
-    "axios": "^1.4.0",
     "colorette": "^2.0.20",
     "electron-is-dev": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.0"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,7 +26,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
-    "electron": "electron ."
+    "electron": "electron .",
+    "build-electron": "yarn build && electron-builder --linux --windows",
+    "build-electron-win": "yarn build && electron-builder --windows"
   },
   "build": {
     "win": {

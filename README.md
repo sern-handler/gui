@@ -10,6 +10,11 @@ sern init but gui
 
 public/electron.js
 
-### why tho?
+# how do I build the app?
 
-if it works, ain't touch it
+`yarn build-electron` ([tested on linux](https://gist.github.com/SrIzan10/50bc2ba689a4cc43bcbac2799cc733c9). `wine` must be installed to build windows packages)
+`yarn build-electron-windows` (not tested but should work. use this if on windows. only builds windows packages)
+
+# CI builds?
+
+Builds will be set up using a jetbrains teamcity instance when migration to new server is done. ETA still not known. Packaged binaries are built on my host computer for now. If you're skeptical, build the app for yourself.

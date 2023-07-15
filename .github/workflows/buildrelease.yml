@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: Build electron index.ts file
+        run: npx tsc --outDir "./dist" ./electron/index.ts
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:

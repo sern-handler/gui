@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import './modalStyles.css';
+import './InitModal.css';
 const { ipcRenderer } = window.require('electron');
 
 // eslint-disable-next-line no-unused-vars

@@ -2,7 +2,7 @@
   "name": "sern-gui",
   "productName": "sern-gui",
   "version": "0.1.0-alpha",
-  "main": "./public/electron.js",
+  "main": "./electron/index.js",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -28,12 +28,20 @@
     "dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
     "electron": "electron .",
     "build-electron": "yarn build && electron-builder --linux --windows",
+    "build-electron-linux": "yarn build && electron-builder --linux",
     "build-electron-win": "yarn build && electron-builder --windows"
   },
   "build": {
+    "extends": null,
+    "files": [
+      "build/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
     "win": {
-      "icon": "icons/icon.ico",
-      "publisherName": "sern open source"
+      "icon": "./icons/icon.ico",
+      "publisherName": "sern"
     }
   },
   "eslintConfig": {

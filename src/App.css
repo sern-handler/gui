@@ -1,10 +1,10 @@
-@font-face {
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+/* @font-face {
 	font-family: 'Classic Console Neue';
 	src: local('Classic Console Neue'),
 		url('https://fonts.srizan.dev/clacon2.ttf') format('truetype');
-}
-
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+} */
 
 .titleHeader {
 	color: #4af626;

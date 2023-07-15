@@ -6,16 +6,16 @@ import Modal from '@mui/material/Modal';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import type { IpcRendererEvent } from 'electron'
 import './InitModal.css';
 const { ipcRenderer } = window.require('electron');
 
-// eslint-disable-next-line no-unused-vars
-const style = {
+/* const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -26,7 +26,7 @@ const style = {
   boxShadow: 24,
   padding: '20px',
   color: 'white',
-};
+}; */
 
 export default function InitModal() {
   const [open, setOpen] = React.useState(false);
@@ -34,21 +34,21 @@ export default function InitModal() {
   const handleClose = () => setOpen(false);
 
   const [chosenTemplate, setChosenTemplate] = React.useState('');
-  const handleTemplateChange = (event) => {
+  const handleTemplateChange = (event: SelectChangeEvent) => {
     setChosenTemplate(event.target.value);
   };
 
   const [installPackages, setInstallPackages] = React.useState(true);
-  const handlePackagesChange = (event) => {
+  const handlePackagesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInstallPackages(event.target.checked);
   };
 
   const [chosenPackageManager, setChosenPackageManager] = React.useState('');
-  const handlePackageManagerChange = (event) => {
+  const handlePackageManagerChange = (event: SelectChangeEvent<string>) => {
     setChosenPackageManager(event.target.value);
   };
 
-  const [templates, setTemplates] = React.useState([]);
+  const [templates, setTemplates] = React.useState<Array<TemplateList>>([]);
   React.useEffect(() => {
     fetch('https://raw.githubusercontent.com/sern-handler/create-bot/main/metadata/templateChoices.json')
       .then((res) => res.json())
@@ -71,7 +71,7 @@ export default function InitModal() {
   };
 
   const [projectName, setProjectName] = React.useState('');
-  const handleProjectNameChange = (event) => {
+  const handleProjectNameChange = (event: any) => {
     setProjectName(event.target.value);
   };
 
@@ -83,7 +83,7 @@ export default function InitModal() {
     };
   }, []);
 
-  const handleFolderData = (event, paths) => {
+  const handleFolderData = (_event: IpcRendererEvent, paths: string[]) => {
     const selectedPath = paths && paths.length > 0 ? paths[0] : '';
     setSelectedPath(selectedPath);
   };
@@ -169,7 +169,6 @@ export default function InitModal() {
                     onChange={handlePackagesChange}
                   />
                 }
-                fullWidth
                 label="Install packages while you're at it"
               />
             </FormGroup>
@@ -239,4 +238,9 @@ export default function InitModal() {
       </Modal>
     </div>
   );
+}
+
+interface TemplateList {
+  title: string
+  value: string
 }

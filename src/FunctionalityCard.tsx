@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -6,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import InitModal from './InitModal.js';
 import PluginsModal from './PluginsModal.js';
 
-function cardChooser(command) {
+function cardChooser(command: string) {
   switch (command) {
     case 'init':
       return <InitModal />
@@ -17,7 +16,8 @@ function cardChooser(command) {
   }
 }
 
-export default function FunctionalityCard({ command, description }) {
+export default function FunctionalityCard(props: Props) {
+  const { command, description } = props
   return (
     <Card sx={{ width: window.innerWidth / 2 }} variant='outlined'>
       <CardContent>
@@ -34,4 +34,9 @@ export default function FunctionalityCard({ command, description }) {
       </CardActions>
     </Card>
   );
+}
+
+interface Props {
+  command: string
+  description: string
 }

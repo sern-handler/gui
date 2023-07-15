@@ -1,9 +1,9 @@
-const path = require('path');
-const { app, BrowserWindow, dialog, ipcMain } = require('electron');
-const isDev = require('electron-is-dev');
-const fs = require('fs');
-const colorette = require('colorette')
-const { exec } = require('node:child_process')
+import * as path from 'node:path'
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import * as isDev from 'electron-is-dev';
+import * as fs from 'fs';
+import * as colorette from 'colorette';
+import { exec } from 'node:child_process';
 
 function createWindow() {
 	const mainWindow = new BrowserWindow({
@@ -19,7 +19,7 @@ function createWindow() {
 		title: 'sern',
 	});
 	if (isDev) {
-		mainWindow.loadURL('http://localhost:3000');
+		mainWindow.loadURL('http://localhost:5173');
 	} else {
 		mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
 	}
@@ -32,7 +32,7 @@ function createWindow() {
 		e.preventDefault();
 	});
 
-	ipcMain.on('openFolder', (event, arg) => {
+	ipcMain.on('openFolder', (event, _arg) => {
 		dialog
 		  .showOpenDialog({
 			properties: ['openDirectory'],
@@ -52,7 +52,7 @@ function createWindow() {
 		console.log(data);
 		console.log(`${colorette.cyan('🛈')} Current OS: ${currentOS}`)
 
-		let packageManagerCommand
+		let packageManagerCommand: string
 		switch (data.chosenPackageManager) {
 			case 'npm':
 				packageManagerCommand = `npm create @sern/bot@latest -- --template=${data.chosenTemplate} --name="${data.projectName}" --install=npm`
@@ -67,7 +67,7 @@ function createWindow() {
 				packageManagerCommand = `npm create @sern/bot@latest -- --template=${data.chosenTemplate} --name="${data.projectName}"`
 				break;
 		}
-		let commandToRun
+		let commandToRun: string
 		switch (currentOS) {
 			case 'linux':
 				commandToRun = `cd ${data.selectedPath};${packageManagerCommand}`
@@ -87,11 +87,11 @@ function createWindow() {
 		console.log(`${colorette.cyan('🛈')} About to execute command: ${commandToRun}`)
 		const cmd = exec(commandToRun)
 
-		cmd.stdout.on('data', (data) => {
+		cmd.stdout!.on('data', (data) => {
 			console.log(`${colorette.cyan('🛈')} Command stdout: ${data}`);
 		});
 
-		cmd.stderr.on('data', (data) => {
+		cmd.stderr!.on('data', (data) => {
 			console.error(`${colorette.red('×')} Command stderr: ${data}`);
 		});
 
@@ -116,7 +116,7 @@ app.on('activate', () => {
 	}
 });
 
-let currentOS
+let currentOS: string
 switch (process.platform) {
 	case 'linux':
 		currentOS = 'linux'
@@ -133,4 +133,21 @@ switch (process.platform) {
 		break;
 }
 
-console.log(fs.readFileSync(__dirname + '/ascii.txt', 'utf-8'))
+const asciiart = `         .:-=-:.         
+.:=+++++++++=-.     
+:-=+++++++++++++++++=-: 
+=++++++++++++++++++++=:.      
+=+++++++++++++++=-:           
+=++++++++++++-.               ######  ######## ########  ##    ##     ######   ##     ## #### 
+=++++++++++++*+=:.            ##    ## ##       ##     ## ###   ##    ##    ##  ##     ##  ##  
+=++++++++++++******=-.        ##       ##       ##     ## ####  ##    ##        ##     ##  ##  
+:=+++++++++++**********+-      ######  ######   ########  ## ## ##    ##   #### ##     ##  ##  
+.:-+++++++********###*           ## ##       ##   ##   ##  ####    ##    ##  ##     ##  ##  
+   :-=++***########*     ##    ## ##       ##    ##  ##   ###    ##    ##  ##     ##  ##  
+	 .-*###########*      ######  ######## ##     ## ##    ##     ######    #######  #### 
+ :=+###############*     
+.-=*###################*     
+.:=*#################*=-.
+:=+#########+=:     
+`
+console.log(asciiart)

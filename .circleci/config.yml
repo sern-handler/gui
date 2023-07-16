@@ -7,6 +7,7 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn electron-ci
+      - run: yarn add -D dmg-license
       - run: yarn build-electron-mac
   build_windows:
     docker:

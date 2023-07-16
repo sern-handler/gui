@@ -14,7 +14,8 @@
     "electron-ci": "tsc --outDir \"./dist\" ./electron/index.ts",
     "build-electron": "yarn build && electron-builder --linux --windows",
     "build-electron-linux": "yarn build && electron-builder --linux",
-    "build-electron-win": "yarn build && electron-builder --windows"
+    "build-electron-win": "yarn build && electron-builder --windows",
+    "build-electron-mac": "yarn build && electron-builder --mac"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  build_mac:
+    docker:
+      - image: circleci/node:14.17.6
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn electron-ci
+      - run: yarn build-electron-mac
+  build_windows:
+    docker:
+      - image: electronuserland/builder:wine
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn electron-ci
+      - run: yarn build-electron-windows
+  build_linux:
+    docker:
+      - image: node:14.17.6
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn electron-ci
+      - run: yarn build-electron-linux
+
+workflows:
+  build:
+    jobs:
+      - build_mac
+      - build_windows
+      - build_linux

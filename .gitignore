@@ -23,5 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# some random thing from electron (it doesnt compile in a dist folder for some reason
-./electron/index.js
+build/

@@ -1,7 +1,6 @@
 import * as path from 'node:path'
 import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import * as isDev from 'electron-is-dev';
-import * as fs from 'fs';
 import * as colorette from 'colorette';
 import { exec } from 'node:child_process';
 

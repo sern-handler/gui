@@ -51,7 +51,8 @@
   "build": {
     "extends": null,
     "files": [
-      "build/**/*"
+      "./build/**/*",
+      "./dist/index.js"
     ],
     "directories": {
       "buildResources": "assets"

@@ -1,14 +1,5 @@
 version: 2.1
 jobs:
-  build_mac:
-    docker:
-      - image: node:lts
-    steps:
-      - checkout
-      - run: yarn
-      - run: yarn electron-ci
-      - run: yarn add -D dmg-license
-      - run: yarn build-electron-mac
   build_windows:
     docker:
       - image: electronuserland/builder:wine

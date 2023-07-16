@@ -25,4 +25,6 @@ workflows:
       - build_windows:
           requires:
             - hold
-      - build_linux
+      - build_linux:
+          requires:
+            - hold

@@ -71,7 +71,7 @@ export default function InitModal() {
   };
 
   const [projectName, setProjectName] = React.useState('');
-  const handleProjectNameChange = (event: any) => {
+  const handleProjectNameChange = (event: ) => {
     setProjectName(event.target.value);
   };
 

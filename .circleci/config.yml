@@ -20,6 +20,5 @@ jobs:
 workflows:
   build:
     jobs:
-      - build_mac
       - build_windows
       - build_linux

@@ -20,9 +20,9 @@ jobs:
 workflows:
   build:
     jobs:
-      - hold
+      - hold:
           type: approval
-      - build_windows
+      - build_windows:
           requires:
             - hold
       - build_linux

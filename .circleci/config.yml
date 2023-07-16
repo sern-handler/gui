@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build_mac:
     docker:
-      - image: circleci/node:18.6.1
+      - image: node:18.6.1
     steps:
       - checkout
       - run: yarn
@@ -15,7 +15,7 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn electron-ci
-      - run: yarn build-electron-windows
+      - run: yarn build-electron-win
   build_linux:
     docker:
       - image: node:18.6.1

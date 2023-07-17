@@ -1,6 +1,9 @@
 # init-gui
-
 sern init but gui
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/sern-handler/gui)
+
+
 
 # why do u use electron!?!?! switch to tauri!! im mad uwu (；⌣̀_⌣́)
 

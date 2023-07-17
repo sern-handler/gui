@@ -1,10 +1,22 @@
 {
   "name": "sern-gui",
-  "productName": "sern-gui",
-  "version": "0.1.0-alpha",
-  "main": "./electron/index.js",
   "private": true,
+  "version": "0.1.0-alpha",
+  "main": "./dist/index.js",
   "homepage": "./",
+  "scripts": {
+    "start": "vite",
+    "dev": "concurrently -k \"yarn:start\" \"yarn:electron\"",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "electron": "tsc-watch ./electron/index.ts --outDir \"./dist\" --onSuccess \"electron .\"",
+    "electron-ci": "tsc --outDir \"./dist\" ./electron/index.ts",
+    "build-electron": "yarn build && electron-builder --linux --windows",
+    "build-electron-linux": "yarn build && electron-builder --linux",
+    "build-electron-win": "yarn build && electron-builder --windows",
+    "build-electron-mac": "yarn build && electron-builder --mac"
+  },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -17,24 +29,30 @@
     "colorette": "^2.0.20",
     "electron-is-dev": "^2.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
+    "react-dom": "^18.2.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "concurrently -k \"BROWSER=none yarn start\" \"yarn:electron\"",
-    "electron": "electron .",
-    "build-electron": "yarn build && electron-builder --linux --windows",
-    "build-electron-linux": "yarn build && electron-builder --linux",
-    "build-electron-win": "yarn build && electron-builder --windows"
+  "devDependencies": {
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "@vitejs/plugin-react-swc": "^3.3.2",
+    "concurrently": "^8.2.0",
+    "electron": "^25.2.0",
+    "electron-builder": "^24.4.0",
+    "eslint": "^8.44.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.1",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.0",
+    "wait-on": "^7.0.1"
   },
   "build": {
     "extends": null,
     "files": [
-      "build/**/*"
+      "./build/**/*",
+      "./dist/index.js"
     ],
     "directories": {
       "buildResources": "assets"
@@ -43,30 +61,5 @@
       "icon": "./icons/icon.ico",
       "publisherName": "sern"
     }
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "concurrently": "^8.2.0",
-    "electron": "^25.2.0",
-    "electron-builder": "^24.4.0",
-    "wait-on": "^7.0.1"
   }
 }

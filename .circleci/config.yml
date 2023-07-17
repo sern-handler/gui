@@ -1,0 +1,30 @@
+version: 2.1
+jobs:
+  build_windows:
+    docker:
+      - image: electronuserland/builder:wine
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn electron-ci
+      - run: yarn build-electron-win
+  build_linux:
+    docker:
+      - image: node:lts
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn electron-ci
+      - run: yarn build-electron-linux
+
+workflows:
+  build:
+    jobs:
+      - hold:
+          type: approval
+      - build_windows:
+          requires:
+            - hold
+      - build_linux:
+          requires:
+            - hold

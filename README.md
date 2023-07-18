@@ -1,9 +1,7 @@
-# init-gui
-sern init but gui
+# gui
+yet another way to manage your sern projects!
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/sern-handler/gui)
-
-
 
 # why do u use electron!?!?! switch to tauri!! im mad uwu (；⌣̀_⌣́)
 
@@ -11,12 +9,13 @@ sern init but gui
 
 # where's the electron code?
 
-public/electron.js
+electron/index.ts
 
 # how do I build the app?
 
-`yarn build-electron` ([tested on linux](https://gist.github.com/SrIzan10/50bc2ba689a4cc43bcbac2799cc733c9). `wine` must be installed to build windows packages)
-`yarn build-electron-windows` (not tested but should work. use this if on windows. only builds windows packages)
+`yarn build-electron` ([tested on linux](https://gist.github.com/SrIzan10/50bc2ba689a4cc43bcbac2799cc733c9). `wine` must be installed to build windows packages)  
+`yarn build-electron-windows` (not tested but should work. use this if on windows. only builds windows packages)  
+`yarn build-electron-mac`
 
 # CI builds?
 

@@ -1,7 +1,7 @@
-import * as path from 'node:path'
+import path from 'node:path'
 import { app, BrowserWindow, dialog, ipcMain } from 'electron';
-import * as isDev from 'electron-is-dev';
-import * as colorette from 'colorette';
+import isDev from 'electron-is-dev';
+import colorette from 'colorette';
 import { exec } from 'node:child_process';
 
 function createWindow() {
@@ -47,9 +47,9 @@ function createWindow() {
 	
 	ipcMain.on('submitForm', async (event, data) => {
 		// Process the submitted data here
-		console.log(`${colorette.green('✓')} Received sern init submit form data:`)
-		console.log(data);
-		console.log(`${colorette.cyan('🛈')} Current OS: ${currentOS}`)
+		console.log(`${colorette.green('✓')} Received sern init submit form data:`);
+		console.log(data)
+		console.log(`${colorette.cyan('🛈')} Current OS: ${currentOS}`);
 
 		let packageManagerCommand: string
 		switch (data.chosenPackageManager) {
@@ -66,7 +66,7 @@ function createWindow() {
 				packageManagerCommand = `npm create @sern/bot@latest -- --template=${data.chosenTemplate} --name="${data.projectName}"`
 				break;
 		}
-		let commandToRun: string
+		let commandToRun: string;
 		switch (currentOS) {
 			case 'linux':
 				commandToRun = `cd ${data.selectedPath};${packageManagerCommand}`
@@ -83,15 +83,15 @@ function createWindow() {
 				break;
 		}
 
-		console.log(`${colorette.cyan('🛈')} About to execute command: ${commandToRun}`)
+		console.log(`${colorette.cyan('🛈')} About to execute command: ${commandToRun}`);
 		const cmd = exec(commandToRun)
 
 		cmd.stdout!.on('data', (data) => {
-			console.log(`${colorette.cyan('🛈')} Command stdout: ${data}`);
+			console.log(`${colorette.cyan('🛈')} ${data}`);
 		});
 
 		cmd.stderr!.on('data', (data) => {
-			console.error(`${colorette.red('×')} Command stderr: ${data}`);
+			console.error(`${colorette.red('×')} stderr: ${data}`);
 		});
 
 		cmd.on('close', (code) => {

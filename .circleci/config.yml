@@ -6,7 +6,6 @@ jobs:
     steps:
       - checkout
       - run: yarn
-      - run: yarn electron-ci
       - run: yarn build-electron-win
   build_linux:
     docker:
@@ -14,7 +13,6 @@ jobs:
     steps:
       - checkout
       - run: yarn
-      - run: yarn electron-ci
       - run: yarn build-electron-linux
 
 workflows:

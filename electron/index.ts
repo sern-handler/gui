@@ -1,8 +1,10 @@
 import path from 'node:path'
 import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
-import colorette from 'colorette';
-import { exec } from 'node:child_process';
+import * as colorette from 'colorette';
+import * as fs from 'node:fs'
+import * as os from 'node:os'
+import { exec, spawn } from 'node:child_process';
 
 function createWindow() {
 	const mainWindow = new BrowserWindow({
@@ -46,10 +48,11 @@ function createWindow() {
 	});
 	
 	ipcMain.on('submitForm', async (event, data) => {
+		const fileName = createRandomFileName('txt')
 		// Process the submitted data here
-		console.log(`${colorette.green('✓')} Received sern init submit form data:`);
-		console.log(data)
-		console.log(`${colorette.cyan('🛈')} Current OS: ${currentOS}`);
+		writeLineToLogAndConsole(`${colorette.green('✓')} Received sern init submit form data:`, fileName);
+		writeLineToLogAndConsole(JSON.stringify(data), fileName)
+		writeLineToLogAndConsole(`${colorette.cyan('🛈')} Current OS: ${currentOS}`, fileName);
 
 		let packageManagerCommand: string
 		switch (data.chosenPackageManager) {
@@ -83,22 +86,28 @@ function createWindow() {
 				break;
 		}
 
-		console.log(`${colorette.cyan('🛈')} About to execute command: ${commandToRun}`);
+		writeLineToLogAndConsole(`${colorette.cyan('🛈')} About to execute command: ${commandToRun}`, fileName);
 		const cmd = exec(commandToRun)
 
 		cmd.stdout!.on('data', (data) => {
-			console.log(`${colorette.cyan('🛈')} ${data}`);
+			writeLineToLogAndConsole(`${colorette.cyan('🛈')} ${data}`, fileName);
 		});
 
 		cmd.stderr!.on('data', (data) => {
-			console.error(`${colorette.red('×')} stderr: ${data}`);
+			writeLineToLogAndConsole(`${colorette.red('×')} stderr: ${data}`, fileName);
 		});
 
 		cmd.on('close', (code) => {
-			console.log(`${colorette.cyan('🛈')} Command exited with status code ${code}. Now notifying frontend...`);
-			event.reply('submitForm')
+			writeLineToLogAndConsole(`${colorette.cyan('🛈')} Command exited with status code ${code}. Now notifying frontend...`, fileName);
+			event.reply('submitForm', { exitCode: code, logFileName: fileName })
 		});
 	});
+
+	ipcMain.on('openTxtFile', (event, args) => {
+		console.log('heya', args)
+		openTempTextFile(args)
+		event.reply('openTxtFile')
+	})
 }
 
 app.whenReady().then(createWindow);
@@ -150,3 +159,38 @@ const asciiart = `         .:-=-:.
 :=+#########+=:     
 `
 console.log(asciiart)
+
+// from now on will be functions that are used in the above code
+
+function createRandomFileName(extension: string) {
+	return `sern-gui-${randomstring(8)}.${extension}`
+}
+
+function writeLineToLogAndConsole(text: string, logfilename: string) {
+	console.log(text)
+	fs.appendFileSync(`${os.tmpdir()}/${logfilename}`, `\n${text}`, { encoding: 'utf-8' })
+}
+
+function openTempTextFile(filename: string) {
+	const completeFilename = `${os.tmpdir()}/${filename}`
+	switch (currentOS) {
+		case 'macOS':
+			return spawn('open', [completeFilename])
+		case 'windows':
+			return spawn('notepad', [completeFilename])
+		case 'linux':
+			return spawn('xdg-open', [completeFilename])
+	}
+}
+
+function randomstring(length: number) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		counter += 1;
+    }
+    return result;
+}

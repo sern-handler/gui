@@ -19,4 +19,6 @@ electron/index.ts
 
 # CI builds?
 
-Builds will be set up using a jetbrains teamcity instance when migration to new server is done. ETA still not known. Packaged binaries are built on my host computer for now. If you're skeptical, build the app for yourself.
+CI builds are a WIP. We have working Linux and Windows CircleCI workflows in place, but build artifacts are still not implemented.  
+The project is in a very early stage and currently I build binaries on my host computer.  
+I know this is annoying, but you should build yourself the app (which you can do by following the last question)

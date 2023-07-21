@@ -12,6 +12,10 @@ import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import type { IpcRendererEvent } from 'electron'
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import './InitModal.css';
 const { ipcRenderer } = window.require('electron');
 
@@ -29,9 +33,14 @@ const { ipcRenderer } = window.require('electron');
 }; */
 
 export default function InitModal() {
+  const [loadingBecauseItsSettingUp, setLoadingBecauseItsSettingUp] = React.useState(false);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    if (loadingBecauseItsSettingUp) return;
+    setOpen(false)
+  }
 
   const [chosenTemplate, setChosenTemplate] = React.useState('');
   const handleTemplateChange = (event: SelectChangeEvent) => {
@@ -53,7 +62,7 @@ export default function InitModal() {
     fetch('https://raw.githubusercontent.com/sern-handler/create-bot/main/metadata/templateChoices.json')
       .then((res) => res.json())
       .then((data) => {
-        setTemplates(data);
+        setTemplates(data as TemplateList[]);
       })
       .catch((err) => {
         console.log(err.message);
@@ -88,6 +97,38 @@ export default function InitModal() {
     setSelectedPath(selectedPath);
   };
 
+  const [logFileName, setLogFileName] = React.useState('')
+
+  const handleOpenLogFile = () => {
+    ipcRenderer.send('openTxtFile', logFileName);
+
+    ipcRenderer.on('openTxtFile', (_event, _args) => {
+      ipcRenderer.removeAllListeners('openTxtFile');
+    });
+  }
+
+  const [successSnackbarOpen, setSuccessSnackbarOpen] = React.useState(false)
+  const handleSuccessSnackbarClose = () => setSuccessSnackbarOpen(false);
+
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = React.useState(false)
+  const handleErrorSnackbarClose = () => setErrorSnackbarOpen(false);
+
+  const snackbarAction = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleOpenLogFile}>
+        OPEN LOG FILE
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   const [loading, setLoading] = React.useState(false);
 
   const isFormValid = () => {
@@ -108,13 +149,21 @@ export default function InitModal() {
     };
 
     setLoading(true);
+    setLoadingBecauseItsSettingUp(true)
 
     ipcRenderer.send('submitForm', data);
 
-    ipcRenderer.on('submitForm', () => {
+    ipcRenderer.on('submitForm', (_event, args) => {
       setLoading(false);
+      setLoadingBecauseItsSettingUp(false);
       handleClose();
-      ipcRenderer.removeAllListeners('submitForm'); // Remove the listener to avoid memory leaks
+      setLogFileName(args.logFileName)
+      if (args.exitCode === 0) {
+        setSuccessSnackbarOpen(true)
+      } else {
+        setErrorSnackbarOpen(true)
+      }
+      ipcRenderer.removeAllListeners('submitForm');
     });
   }
 
@@ -210,20 +259,6 @@ export default function InitModal() {
               {selectedPath ? `Selected directory: ${selectedPath}` : ''}
             </Typography>
           </div>
-          <div className="formRow">
-            <Typography
-              variant="body1"
-              component="div"
-              sx={{
-                display: 'block',
-                margin: '0 auto',
-                marginTop: '5px',
-                textAlign: 'center',
-              }}
-            >
-              Do not close the modal while it's loading.
-            </Typography>
-          </div>
           <div className="bottomRight">
             <Button
               variant="contained"
@@ -236,6 +271,16 @@ export default function InitModal() {
           </div>
         </Box>
       </Modal>
+      <Snackbar open={successSnackbarOpen} autoHideDuration={5000} onClose={handleSuccessSnackbarClose} action={snackbarAction}>
+          <Alert onClose={handleSuccessSnackbarClose} severity="success" sx={{ width: '100%' }} action={snackbarAction}>
+            The command was successful!
+          </Alert>
+      </Snackbar>
+      <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose} action={snackbarAction}>
+          <Alert onClose={handleErrorSnackbarClose} severity="error" sx={{ width: '100%' }} action={snackbarAction}>
+            The command was not successful
+          </Alert>
+      </Snackbar>
     </div>
   );
 }

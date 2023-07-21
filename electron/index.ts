@@ -104,7 +104,6 @@ function createWindow() {
 	});
 
 	ipcMain.on('openTxtFile', (event, args) => {
-		console.log('heya', args)
 		openTempTextFile(args)
 		event.reply('openTxtFile')
 	})

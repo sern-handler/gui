@@ -14,6 +14,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     tsconfigRootDir: __dirname,
+    project: '.swcrc'
   },
   plugins: ['react-refresh'],
   rules: {
@@ -21,6 +22,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    '@typescript-eslint/no-non-null-assertion': 'off',
-  },
+    '@typescript-eslint/no-non-null-assertion': 'off'
+  }
 }

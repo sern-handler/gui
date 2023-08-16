@@ -17,22 +17,12 @@ import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import './InitModal.css';
+import { useTranslation } from 'react-i18next';
 const { ipcRenderer } = window.require('electron');
 
-/* const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #FFF',
-  boxShadow: 24,
-  padding: '20px',
-  color: 'white',
-}; */
-
 export default function InitModal() {
+  const { t } = useTranslation('translation', { keyPrefix: 'initModal' });
+
   const [loadingBecauseItsSettingUp, setLoadingBecauseItsSettingUp] = React.useState(false);
 
   const [open, setOpen] = React.useState(false);
@@ -53,13 +43,13 @@ export default function InitModal() {
   };
 
   const [chosenPackageManager, setChosenPackageManager] = React.useState('');
-  const handlePackageManagerChange = (event: SelectChangeEvent<string>) => {
+  const handlePackageManagerChange = (event: SelectChangeEvent) => {
     setChosenPackageManager(event.target.value);
   };
 
   const [templates, setTemplates] = React.useState<Array<TemplateList>>([]);
   React.useEffect(() => {
-    fetch('https://raw.githubusercontent.com/sern-handler/create-bot/main/metadata/templateChoices.json')
+    fetch('https://raw.githubusercontent.com/sern-handler/create-bot/main/metadata/templateChoices.jso')
       .then((res) => res.json())
       .then((data) => {
         setTemplates(data as TemplateList[]);
@@ -70,7 +60,7 @@ export default function InitModal() {
   }, []);
 
   if (templates.length === 0) {
-    setTemplates([{ title: "Couldn't fetch templates! Please do CTRL+R", value: 'error' }]);
+    setTemplates([{ title: t('couldntFetchTemplates'), value: 'error' }]);
   }
 
   const [selectedPath, setSelectedPath] = React.useState('');
@@ -116,7 +106,7 @@ export default function InitModal() {
   const snackbarAction = (
     <React.Fragment>
       <Button color="secondary" size="small" onClick={handleOpenLogFile}>
-        OPEN LOG FILE
+        {t('openLogFile')}
       </Button>
       <IconButton
         size="small"
@@ -153,7 +143,7 @@ export default function InitModal() {
 
     ipcRenderer.send('submitForm', data);
 
-    ipcRenderer.on('submitForm', (_event, args) => {
+    ipcRenderer.on('submitForm', (_event, args: IPCCommandExitEvent) => {
       setLoading(false);
       setLoadingBecauseItsSettingUp(false);
       handleClose();
@@ -169,7 +159,7 @@ export default function InitModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>{t('openModalButton')}</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -183,7 +173,7 @@ export default function InitModal() {
           <div className="formRow">
             <TextField
               id="modal-form-projectName"
-              label="Project name"
+              label={t('projectName')}
               variant="outlined"
               onChange={handleProjectNameChange}
               required
@@ -191,19 +181,19 @@ export default function InitModal() {
             />
             <FormControl fullWidth className="chooseTemplateForm">
               <InputLabel id="modal-form-templateLabel">
-                Select template
+                {t('selectTemplate')}
               </InputLabel>
               <Select
                 labelId="modal-form-templateSelect"
                 id="modal-form-templateSelect"
                 value={chosenTemplate}
-                label="Select template"
+                label={t('selectTemplate')}
                 onChange={handleTemplateChange}
                 fullWidth
               >
                 {templates.map((template) => (
                   <MenuItem key={template.value} value={template.value}>
-                    {template.title}
+                    {template.title.replace('with', t('with'))}
                   </MenuItem>
                 ))}
               </Select>
@@ -218,12 +208,12 @@ export default function InitModal() {
                     onChange={handlePackagesChange}
                   />
                 }
-                label="Install packages while you're at it"
+                label={t('installPackagesCheckbox')}
               />
             </FormGroup>
             <FormControl className="choosePkgManagerForm" fullWidth>
               <InputLabel id="modal-form-packageManagerLabel">
-                Select package manager
+                {t('selectPackageManager')}
               </InputLabel>
               <Select
                 labelId="modal-form-packageManagerLabel"
@@ -247,7 +237,7 @@ export default function InitModal() {
               onClick={handleChooseDirButton}
               sx={{ display: 'block', margin: '0 auto', marginTop: '5px' }}
             >
-              Select directory
+              {t('chooseDirectoryButton')}
             </Button>
           </div>
           <div className="formRow">
@@ -256,7 +246,7 @@ export default function InitModal() {
               component="div"
               sx={{ display: 'block', margin: '0 auto', marginTop: '5px' }}
             >
-              {selectedPath ? `Selected directory: ${selectedPath}` : ''}
+              {selectedPath ? `${t('selectedDirectory')} ${selectedPath}` : ''}
             </Typography>
           </div>
           <div className="bottomRight">
@@ -266,19 +256,20 @@ export default function InitModal() {
               onClick={handleSubmit}
               disabled={loading || !isFormValid()}
             >
-              {loading ? 'Go!' : 'Go!'}
+              {/*{ loading ? 'Go!' : 'Go!' }*/}
+              {t('goButton')}
             </Button>
           </div>
         </Box>
       </Modal>
       <Snackbar open={successSnackbarOpen} autoHideDuration={5000} onClose={handleSuccessSnackbarClose} action={snackbarAction}>
           <Alert onClose={handleSuccessSnackbarClose} severity="success" sx={{ width: '100%' }} action={snackbarAction}>
-            The command was successful!
+            {t('commandSuccessful')}
           </Alert>
       </Snackbar>
       <Snackbar open={errorSnackbarOpen} autoHideDuration={5000} onClose={handleErrorSnackbarClose} action={snackbarAction}>
           <Alert onClose={handleErrorSnackbarClose} severity="error" sx={{ width: '100%' }} action={snackbarAction}>
-            The command was not successful
+            {t('commandFailed')}
           </Alert>
       </Snackbar>
     </div>
@@ -288,4 +279,9 @@ export default function InitModal() {
 interface TemplateList {
   title: string
   value: string
+}
+
+interface IPCCommandExitEvent {
+  exitCode: number | null
+  logFileName: string
 }

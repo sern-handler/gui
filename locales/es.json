@@ -1,0 +1,40 @@
+{
+  "credits": {
+    "propsTo": "@SrIzan10 (spanish me)",
+    "btw": "Todos los COMMENT_FOR_TRANSLATOR son entradas que te ayudan a traducir los textos siguiendo unas reglas. Sigue estas para ser aprobado más fácilmente."
+  },
+  "translation": {
+    "functionalityCard": {
+      "init": {
+        "description": "Inicia un nuevo proyecto"
+      },
+      "plugins": {
+        "description": "Administra los plugins de un proyecto existente"
+      }
+    },
+    "initModal": {
+      "openModalButton": "Empezar",
+      "projectName": "Nombre del proyecto",
+      "selectTemplate": "Selecciona una plantilla",
+      "couldntFetchTemplatesError": "No se pudieron obtener las plantillas. Haz CTRL+R. (¿Estás conectado a internet?)",
+      "installPackagesCheckbox": "De paso instala las depencencias",
+      "selectPackageManager": "Selecciona un gestor de paquetes",
+      "chooseDirectoryButton": "Selecciona un directorio",
+      "selectedDirectory": "Directorio seleccionado:",
+      "goButton": "¡Vamos!",
+      "commandSuccessful": "El comando se ejecutó con éxito!",
+      "commandFailed": "El comando falló.",
+      "COMMENT_FOR_TRANSLATOR": "Mantén esto en mayúsculas",
+      "openLogFile": "Abrir archivo de registro",
+      "COMMENT_FOR_TRANSLATOR_2": "El texto de abajo sirve para reemplazar 'with' en las opciones de plantilla con lo de abajo. No cambiar.",
+      "with": "con"
+    },
+    "footer": {
+      "COMMENT_FOR_TRANSLATOR": "Mantén todos los textos aquí en minúsculas. Le dan un buen vibe al texto :D",
+      "web": "web",
+      "COMMENT_FOR_TRANSLATOR_2": "Mantén estos textos así. Al fin y al cabo son marcas, así que no deberías cambiarlas excepto si se llaman de otra forma en el idioma.",
+      "github": "github",
+      "discord": "discord"
+    }
+  }
+}

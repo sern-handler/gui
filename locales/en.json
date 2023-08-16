@@ -1,0 +1,40 @@
+{
+  "credits": {
+    "propsTo": "@SrIzan10 (original language for this project)",
+    "btw": "All COMMENT_FOR_TRANSLATOR keys are comments that help you how to write translations. Follow these so you get approved faster."
+  },
+  "translation": {
+    "functionalityCard": {
+      "init": {
+        "description": "Scaffold a new project"
+      },
+      "plugins": {
+        "description": "Manage the plugins of an existing project"
+      }
+    },
+    "initModal": {
+      "openModalButton": "Get started",
+      "projectName": "Project name",
+      "selectTemplate": "Select a template",
+      "couldntFetchTemplates": "Couldn't fetch templates! Please do CTRL+R (u online?)",
+      "installPackagesCheckbox": "Install packages while you're at it",
+      "selectPackageManager": "Select a package manager",
+      "chooseDirectoryButton": "Select directory",
+      "selectedDirectory": "Selected directory:",
+      "goButton": "Go!",
+      "commandSuccessful": "The command was successful!",
+      "commandFailed": "The command failed!",
+      "COMMENT_FOR_TRANSLATOR": "keep this uppercase",
+      "openLogFile": "OPEN LOG FILE",
+      "COMMENT_FOR_TRANSLATOR_2": "the next string is used to change the text 'with' in the sentence 'with <package manager>'",
+      "with": "with"
+    },
+    "footer": {
+      "COMMENT_FOR_TRANSLATOR": "Keep all the strings here as lowercase. It kinda gives a good vibe to the text :D",
+      "web": "front page",
+      "COMMENT_FOR_TRANSLATOR_2": "Keep these at their current state. They are brands after all, so you shouldn't change these unless they are called differently in other languages",
+      "github": "github",
+      "discord": "discord"
+    }
+  }
+}

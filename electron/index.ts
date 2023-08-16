@@ -1,6 +1,6 @@
-import path from 'node:path'
+import * as path from 'node:path'
 import { app, BrowserWindow, dialog, ipcMain } from 'electron';
-import isDev from 'electron-is-dev';
+import * as isDev from 'electron-is-dev';
 import * as colorette from 'colorette';
 import * as fs from 'node:fs'
 import * as os from 'node:os'
@@ -47,7 +47,7 @@ function createWindow() {
 		  });
 	});
 	
-	ipcMain.on('submitForm', async (event, data) => {
+	ipcMain.on('submitForm', async (event, data: InitModalData) => {
 		const fileName = createRandomFileName('txt')
 		// Process the submitted data here
 		writeLineToLogAndConsole(`${colorette.green('✓')} Received sern init submit form data:`, fileName);
@@ -192,4 +192,12 @@ function randomstring(length: number) {
 		counter += 1;
     }
     return result;
+}
+
+interface InitModalData {
+	projectName: string,
+	chosenTemplate: string,
+	installPackages: boolean,
+	chosenPackageManager: string,
+	selectedPath: string
 }

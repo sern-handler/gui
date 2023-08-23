@@ -1,6 +1,5 @@
 import * as path from 'node:path'
 import { app, BrowserWindow, dialog, ipcMain } from 'electron';
-import * as isDev from 'electron-is-dev';
 import * as colorette from 'colorette';
 import * as fs from 'node:fs'
 import * as os from 'node:os'
@@ -19,10 +18,10 @@ function createWindow() {
 		autoHideMenuBar: true,
 		title: 'sern',
 	});
-	if (isDev) {
-		mainWindow.loadURL('http://localhost:5173');
-	} else {
+	if (app.isPackaged) {
 		mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
+	} else {
+		mainWindow.loadURL('http://localhost:5173');
 	}
 
 	mainWindow.on('ready-to-show', () => {

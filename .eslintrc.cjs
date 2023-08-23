@@ -13,8 +13,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    tsconfigRootDir: __dirname,
-    project: '.swcrc'
+    tsconfigRootDir: __dirname
   },
   plugins: ['react-refresh'],
   rules: {

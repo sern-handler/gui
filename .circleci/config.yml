@@ -7,6 +7,10 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn build-electron-win
+      - run: mkdir /tmp/artifacts
+      - run: mv -t /tmp/artifacts dist/*.exe
+      - store_artifacts:
+          path: /tmp/artifacts
   build_linux:
     docker:
       - image: node:lts
@@ -14,6 +18,10 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn build-electron-linux
+      - run: mkdir /tmp/artifacts
+      - run: mv -t /tmp/artifacts dist/*.snap dist/*.AppImage
+      - store_artifacts:
+          path: /tmp/artifacts
 
 workflows:
   build:

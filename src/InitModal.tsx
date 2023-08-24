@@ -49,7 +49,7 @@ export default function InitModal() {
 
   const [templates, setTemplates] = React.useState<Array<TemplateList>>([]);
   React.useEffect(() => {
-    fetch('https://raw.githubusercontent.com/sern-handler/create-bot/main/metadata/templateChoices.jso')
+    fetch('https://raw.githubusercontent.com/sern-handler/create-bot/main/metadata/templateChoices.json')
       .then((res) => res.json())
       .then((data) => {
         setTemplates(data as TemplateList[]);

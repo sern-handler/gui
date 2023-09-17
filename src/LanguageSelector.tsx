@@ -25,12 +25,13 @@ export default function LanguageSelector() {
 						height: '40px',
 						textAlign: 'center',
 						// this fixes a little text selection gap that appears in a
-						// few pixels outside the outer part of the selection "square"
-						cursor: 'pointer'
+						// few pixels outside the outer part of the selection outline
+						cursor: 'pointer',
+						fontFamily: 'Noto Color Emoji'
 					}}
 				>
-					<MenuItem value={'en'} className={'menuItems'}>🇺🇸</MenuItem>
-					<MenuItem value={'es'} className={'menuItems'}>🇪🇸</MenuItem>
+					<MenuItem value={'en'} className={'menuItems'} sx={{ fontFamily: 'Noto Color Emoji' }}>🇺🇸</MenuItem>
+					<MenuItem value={'es'} className={'menuItems'} sx={{ fontFamily: 'Noto Color Emoji' }}>🇪🇸</MenuItem>
 				</Select>
 			</FormControl>
 		</div>

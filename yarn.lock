@@ -915,6 +915,11 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.0.tgz#591c1ce3a702c45ee15f47a42ade72c2fd78978a"
   integrity sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==
 
+"@types/to-boolean@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/to-boolean/-/to-boolean-1.0.0.tgz#bce7dd64d2d4dc644d39c69f4cdf62867e1bd5dd"
+  integrity sha512-rKY7I5UUlC3mUjGasRsZyg/ksLqUDQMahpn0QWXA3nxZehZF25rJpbvTB37Vjd61iW3j662L3Iu/WlRdGlDcJQ==
+
 "@types/verror@^1.10.3":
   version "1.10.6"
   resolved "https://registry.yarnpkg.com/@types/verror/-/verror-1.10.6.tgz#3e600c62d210c5826460858f84bcbb65805460bb"
@@ -3945,6 +3950,11 @@ tmp@^0.2.0:
   integrity sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==
   dependencies:
     rimraf "^3.0.0"
+
+to-boolean@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/to-boolean/-/to-boolean-1.0.0.tgz#840653cc95abde6ae7fa259e7d74868a91232e3f"
+  integrity sha512-6BregB7cU5D+BVONyLbjoOd3dZXWDNyz6GFu+WdTzd5YbLcgFdZFstwsSgEmELmjdWy9U5e38q2sYSlFhka/Lw==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"

@@ -1,0 +1,13 @@
+.boxStyle {
+    /* background-color: 'background.paper'; set in sx property of Box tag */
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 74.6vw;
+    height: 74.6vh;
+    border: 2px solid #FFF;
+    box-shadow: 24px;
+    padding: 40px;
+    color: white;
+}

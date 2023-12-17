@@ -24,7 +24,7 @@ jobs:
           path: /tmp/artifacts
   build_macos:
       macos:
-        xcode: "10.1.0"
+        xcode: 14.2.0
       steps:
         - checkout
         - run: yarn

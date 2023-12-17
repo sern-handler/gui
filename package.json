@@ -59,6 +59,14 @@
     "win": {
       "icon": "./icons/icon.ico",
       "publisherName": "sern"
+    },
+    "mac": {
+      "icon": "./icons/icon.icns",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        "dmg",
+        "zip"
+      ]
     }
   }
 }

@@ -19,7 +19,7 @@ jobs:
       - run: yarn
       - run: yarn build-electron-linux
       - run: mkdir /tmp/artifacts
-      - run: mv -t /tmp/artifacts dist/*.snap dist/*.AppImage
+      - run: mv -t /tmp/artifacts dist/*.AppImage
       - store_artifacts:
           path: /tmp/artifacts
   build_macos:
@@ -30,7 +30,7 @@ jobs:
         - run: yarn
         - run: yarn build-electron-mac
         - run: mkdir /tmp/artifacts
-        - run: mv -t /tmp/artifacts dist/*.dmg
+        - run: mv dist/*.dmg /tmp/artifacts
         - store_artifacts:
             path: /tmp/artifacts
 

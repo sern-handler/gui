@@ -49,6 +49,8 @@
     "vite": "^4.4.0"
   },
   "build": {
+    "appId": "dev.sern.gui",
+    "productName": "sern GUI",
     "files": [
       "./build/**/*",
       "./dist/index.js"
@@ -59,6 +61,32 @@
     "win": {
       "icon": "./icons/icon.ico",
       "publisherName": "sern"
+    },
+    "mac": {
+      "icon": "./icons/icon.icns",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "dmg": {
+      "background": "./icons/dmgbg.png",
+      "icon": "./icons/icon.icns",
+      "title": "sern GUI",
+      "contents": [
+        {
+          "x": 423,
+          "y": 203,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 117,
+          "y": 203,
+          "type": "file"
+        }
+      ]
     }
   }
 }

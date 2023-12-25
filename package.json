@@ -76,14 +76,14 @@
       "title": "sern GUI",
       "contents": [
         {
-          "x": 372,
-          "y": 143,
+          "x": 423,
+          "y": 203,
           "type": "link",
           "path": "/Applications"
         },
         {
-          "x": 54,
-          "y": 143,
+          "x": 117,
+          "y": 203,
           "type": "file"
         }
       ]

@@ -1,17 +1,19 @@
 import * as path from 'node:path'
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, ipcRenderer } from 'electron';
 import * as colorette from 'colorette';
 import * as fs from 'node:fs'
 import * as os from 'node:os'
 import { exec, spawn } from 'node:child_process';
+import getPlatform from './utils/getPlatform.js';
+import updateChecker from './updateChecker.js';
 
-function createWindow() {
+async function createWindow() {
 	const mainWindow = new BrowserWindow({
 		width: 800,
 		height: 600,
 		webPreferences: {
 			nodeIntegration: true,
-			contextIsolation: false
+			contextIsolation: false,
 		},
 		icon: './icons/icon.png',
 		show: false,
@@ -24,8 +26,16 @@ function createWindow() {
 		mainWindow.loadURL('http://localhost:5173');
 	}
 
-	mainWindow.on('ready-to-show', () => {
+	mainWindow.on('ready-to-show', async () => {
 		mainWindow.show();
+
+		ipcMain.on('updateAvailable', async (event) => {
+			const checkUpdates = await updateChecker()
+			if (checkUpdates) {
+				event.reply('updateAvailableResponse', checkUpdates)
+			}
+		})
+		
 	});
 
 	mainWindow.on('page-title-updated', function (e) {
@@ -122,22 +132,7 @@ app.on('activate', () => {
 	}
 });
 
-let currentOS: string
-switch (process.platform) {
-	case 'linux':
-		currentOS = 'linux'
-		break;
-	case 'win32':
-		currentOS = 'windows'
-		break;
-	case 'darwin':
-		currentOS = 'macOS'
-		break;
-	default:
-		// defaulting for linux (most probable command syntax)
-		currentOS = 'linux'
-		break;
-}
+const currentOS = getPlatform()
 
 const asciiart = `         .:-=-:.         
 .:=+++++++++=-.     

@@ -1,15 +1,16 @@
 {
   "name": "sern-gui",
   "private": true,
-  "version": "0.1.0-alpha",
+  "version": "0.2.0",
   "main": "./dist/index.js",
   "homepage": "./",
   "scripts": {
-    "start": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "electron": "nodemon --watch electron/ --exec \"swc ./electron/index.ts -d ./dist && npx electron .\" electron/index.ts",
+    "start": "vite",
+    "electron": "nodemon --watch electron/ --exec \"swc ./electron/ -d ./dist && npx electron .\" electron/index.ts",
+    "dev": "concurrently \"yarn start\" \"yarn electron\"",
     "electron-build": "swc ./electron/index.ts -d ./dist",
     "build-electron": "yarn build && yarn electron-build && electron-builder --linux --windows",
     "build-electron-linux": "yarn build && yarn electron-build && electron-builder --linux",
@@ -29,7 +30,8 @@
     "i18next": "^23.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^13.1.2"
+    "react-i18next": "^13.1.2",
+    "react-snowfall": "^1.2.1"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.62",
@@ -39,7 +41,8 @@
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
-    "electron": "^26.2.1",
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.0",
     "electron-builder": "^24.4.0",
     "eslint": "^8.44.0",
     "eslint-plugin-react-hooks": "^4.6.0",

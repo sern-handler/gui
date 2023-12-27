@@ -1,0 +1,40 @@
+{
+    "credits": {
+      "propsTo": "@xxDeveloper (translation)",
+      "btw": "All COMMENT_FOR_TRANSLATOR keys are comments that help you how to write translations. Follow these so you get approved faster."
+    },
+    "translation": {
+      "functionalityCard": {
+        "init": {
+          "description": "Yeni bir proje oluşturun"
+        },
+        "plugins": {
+          "description": "Proje eklentilerini yönetin"
+        }
+      },
+      "initModal": {
+        "openModalButton": "Başla",
+        "projectName": "Proje ismi",
+        "selectTemplate": "Şablon seç",
+        "couldntFetchTemplates": "Şablonlar yüklenemedi, yenilemeyi deneyin (CTRL+R) ve online oludğunuzdan emin olun",
+        "installPackagesCheckbox": "Paketleri ben devam ederken yükle",
+        "selectPackageManager": "Paket yöneticisini seçin",
+        "chooseDirectoryButton": "Klasör seçin",
+        "selectedDirectory": "Seçili klasör:",
+        "goButton": "Gidelim!",
+        "commandSuccessful": "Komut başarılı!",
+        "commandFailed": "Komut başarsız oldu!",
+        "COMMENT_FOR_TRANSLATOR": "burada büyük harf kullan",
+        "openLogFile": "LOG dosyasını aç",
+        "COMMENT_FOR_TRANSLATOR_2": "sonraki dize, 'with <paket yöneticisi>' cümlesinde 'with'i değiştirmek için kullanılır'",
+        "with": "ile birlikte"
+      },
+      "footer": {
+        "COMMENT_FOR_TRANSLATOR": "Burada yazılarında küçük harf kullan. İyi vibe veriyor :D",
+        "COMMENT_FOR_TRANSLATOR_2": "Onları şu anki halleriyle tut. Sonuçta onlar marka, dilimizde markalar pek farklı şekilde anılmıyor",
+        "web": "ön sayfa",
+        "github": "github",
+        "discord": "discord"
+      }
+    }
+}

@@ -32,6 +32,7 @@ export default function LanguageSelector() {
 				>
 					<MenuItem value={'en'} className={'menuItems'} sx={{ fontFamily: 'Noto Color Emoji' }}>🇺🇸</MenuItem>
 					<MenuItem value={'es'} className={'menuItems'} sx={{ fontFamily: 'Noto Color Emoji' }}>🇪🇸</MenuItem>
+					<MenuItem value={'tr'} className={'menuItems'} sx={{ fontFamily: 'Noto Color Emoji' }}>🇹🇷</MenuItem>
 				</Select>
 			</FormControl>
 		</div>

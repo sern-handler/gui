@@ -29,6 +29,10 @@
       "COMMENT_FOR_TRANSLATOR_2": "the next string is used to change the text 'with' in the sentence 'with <package manager>'",
       "with": "with"
     },
+    "updateChecker": {
+      "updateAvailable": "Update {{version}} is available!",
+      "viewRelease": "View release"
+    },
     "footer": {
       "COMMENT_FOR_TRANSLATOR": "Keep all the strings here as lowercase. It kinda gives a good vibe to the text :D",
       "web": "front page",

@@ -11,7 +11,7 @@
     "start": "vite",
     "electron": "nodemon --watch electron/ --exec \"swc ./electron/ -d ./dist && npx electron .\" electron/index.ts",
     "dev": "concurrently \"yarn start\" \"yarn electron\"",
-    "electron-build": "swc ./electron/index.ts -d ./dist",
+    "electron-build": "swc ./electron/ -d ./dist",
     "build-electron": "yarn build && yarn electron-build && electron-builder --linux --windows",
     "build-electron-linux": "yarn build && yarn electron-build && electron-builder --linux",
     "build-electron-win": "yarn build && yarn electron-build && electron-builder --windows",
@@ -56,7 +56,7 @@
     "productName": "sern GUI",
     "files": [
       "./build/**/*",
-      "./dist/index.js"
+      "./dist/**/*"
     ],
     "directories": {
       "buildResources": "assets"

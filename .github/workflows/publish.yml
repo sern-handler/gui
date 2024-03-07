@@ -16,14 +16,28 @@ jobs:
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
-        with:
-          node-version: 18
 
       - name: Install packages
         run: yarn
 
       - name: Build electron index.ts file
         run: yarn electron-build
+      
+      - name: Move artifacts
+        run: |
+          mkdir -p /tmp/artifacts
+          if [ ${{ matrix.os }} == 'windows-latest' ]; then
+            mv dist/*.exe /tmp/artifacts
+          elif [ ${{ matrix.os }} == 'macos-latest' ]; then
+            mv dist/*.dmg /tmp/artifacts
+          else
+            mv dist/*.AppImage /tmp/artifacts
+          fi
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: application
+          path: /tmp/artifacts
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1

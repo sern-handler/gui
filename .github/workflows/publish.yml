@@ -37,6 +37,7 @@ jobs:
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
       
       - name: Move artifacts
+        shell: bash
         run: |
           mkdir -p /tmp/artifacts
           if [ ${{ matrix.os }} == 'windows-latest' ]; then

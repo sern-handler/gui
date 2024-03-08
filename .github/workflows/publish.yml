@@ -41,7 +41,7 @@ jobs:
         run: |
           mkdir -p /tmp/artifacts
           if [ ${{ matrix.os }} == 'windows-latest' ]; then
-            mv dist/*.exe /tmp/artifacts
+            mv dist/*.exe d:\tmp\artifacts
           elif [ ${{ matrix.os }} == 'macos-latest' ]; then
             mv dist/*.dmg /tmp/artifacts
           else

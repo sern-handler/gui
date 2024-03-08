@@ -20,7 +20,7 @@ jobs:
           node-version: 20
 
       - name: Install packages
-        run: yarn
+        run: yarn install --network-timeout 1000000
 
       - name: Build electron index.ts file
         run: yarn electron-build

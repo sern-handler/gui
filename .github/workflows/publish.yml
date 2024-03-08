@@ -35,18 +35,27 @@ jobs:
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+      # - name: Send POST request to update server
+      #   if: startsWith(github.ref, 'refs/tags/v')
+      #   run: |
+      #     curl -X POST -H "Content-Type: application/json" -d '{"version": "${{ github.ref }}" }' https://automata.sern.dev/gui/newVersion
       
       - name: Move artifacts
         shell: bash
         run: |
-          mkdir -p /tmp/artifacts
-          if [ ${{ matrix.os }} == 'windows-latest' ]; then
-            mv dist/*.exe d:\tmp\artifacts
-          elif [ ${{ matrix.os }} == 'macos-latest' ]; then
-            mv dist/*.dmg /tmp/artifacts
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            mkdir d:\\tmp\\artifacts
+            mv dist/*.exe d:\\tmp\\artifacts
           else
-            mv dist/*.AppImage /tmp/artifacts
+            mkdir -p /tmp/artifacts
+            if [ "${{ matrix.os }}" == "macos-latest" ]; then
+              mv dist/*.dmg /tmp/artifacts
+            else
+              mv dist/*.AppImage /tmp/artifacts
+            fi
           fi
+        
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
